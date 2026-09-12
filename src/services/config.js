@@ -1,1 +1,1 @@
-export const BASE_URL = "https://6aa5813a1397053d42bba93e.mockapi.io";
+export const BASE_URL = "https://eventhub-backend-m01d.onrender.com";
