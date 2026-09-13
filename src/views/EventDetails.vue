@@ -68,22 +68,23 @@
   
   
           <div class="actions">
-  
-            <button
-              class="back-btn"
-              @click="goBack"
-            >
-              ← Back to Events
-            </button>
-  
-            <button
-              class="book-btn"
-              disabled
-            >
-              Book Now
-            </button>
-  
-          </div>
+
+<button
+  class="back-btn"
+  @click="goBack"
+>
+  ← Back to Events
+</button>
+
+<!-- Booking teammate will connect this button later -->
+<button
+  class="book-btn"
+  disabled
+>
+  Book Now
+</button>
+
+</div>
   
         </div>
   
@@ -328,49 +329,29 @@
   
   
   .actions {
-  
-    display: flex;
-  
-    gap: 15px;
-  
-  }
-  
-  
-  .actions button {
-  
-    padding: 13px 25px;
-  
-    border: none;
-  
-    border-radius: 9px;
-  
-    font-size: 15px;
-  
-  }
-  
-  
-  .back-btn {
-  
-    background: #eee;
-  
-    color: #333;
-  
-    cursor: pointer;
-  
-  }
-  
-  
-  .book-btn {
-  
-    background: #4b2e83;
-  
-    color: white;
-  
-    cursor: not-allowed;
-  
-    opacity: 0.6;
-  
-  }
+  display: flex;
+  gap: 15px;
+}
+
+.actions button {
+  padding: 13px 25px;
+  border: none;
+  border-radius: 9px;
+  font-size: 15px;
+}
+
+.back-btn {
+  background: #eee;
+  color: #333;
+  cursor: pointer;
+}
+
+.book-btn {
+  background: #4b2e83;
+  color: white;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
   
   
   .message {
