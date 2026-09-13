@@ -23,6 +23,7 @@
         />
   
         <select v-model="selectedCategory">
+  
           <option value="">All Categories</option>
   
           <option
@@ -32,6 +33,7 @@
           >
             {{ category }}
           </option>
+  
         </select>
   
       </section>
@@ -80,21 +82,17 @@
               {{ event.category }}
             </span>
   
-  
             <h2>
               {{ event.title }}
             </h2>
-  
   
             <p class="description">
               {{ shortDescription(event.description) }}
             </p>
   
-  
             <p class="venue">
               📍 {{ event.venue }}
             </p>
-  
   
             <p class="date">
               📅 {{ formatDate(event.event_date) }}
@@ -149,75 +147,54 @@
   import { useRouter } from 'vue-router'
   import { apiRequest } from '../services/api.js'
   
-  
   const router = useRouter()
   
   
-  /* =========================
-     State
-  ========================= */
-  
+  // Events
   const events = ref([])
   
   const loading = ref(true)
   
   const error = ref('')
   
+  
+  // Search & Filter
   const searchQuery = ref('')
   
   const selectedCategory = ref('')
   
   
-  /* =========================
-     Fallback Images
-  ========================= */
-  
-  /*
-    These images are used ONLY when
-    image_url from the API is null.
-  */
-  
+  // Fallback Images
   const fallbackImages = {
   
-    // Startup Pitch Night
     "ad784392-12fe-4ac3-ae3e-502cabedebe7":
       "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1000&q=80",
   
-    // Kanan Gill - Comedy
     "2fb5d372-31ff-47a3-a436-029773c4d5e0":
       "https://images.unsplash.com/photo-1527224857830-43a7acc85260?auto=format&fit=crop&w=1000&q=80",
   
-    // Art Bengaluru
     "ece8de6b-aa9a-4319-9264-6e9b8b006ea8":
       "https://images.unsplash.com/photo-1561214115-f2f134cc4912?auto=format&fit=crop&w=1000&q=80",
   
-    // Vir Das - Comedy
     "09fa4dc8-eb6f-47cf-9cfb-21884cbf6c28":
       "https://images.unsplash.com/photo-1503095396549-807759245b35?auto=format&fit=crop&w=1000&q=80",
   
-    // Food Festival
     "0673f332-b1fc-4512-a19c-74de6532e7b1":
       "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1000&q=80",
   
-    // Pro Kabaddi
     "bebb50f8-e6fc-4169-a86f-1ef6ce12a958":
       "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=1000&q=80",
   
-    // Tata Mumbai Marathon
     "e72d6313-1d20-46c6-bc80-612036ed49d6":
       "https://images.unsplash.com/photo-1552674605-db6ffd4facb5?auto=format&fit=crop&w=1000&q=80",
   
-    // NH7 Weekender
     "9584a06c-410f-4d45-bdaf-e5f1108cd71a":
       "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=1000&q=80"
   
   }
   
   
-  /* =========================
-     Get Events
-  ========================= */
-  
+  // Fetch Events
   async function fetchEvents() {
   
     try {
@@ -248,45 +225,26 @@
   }
   
   
-  /* =========================
-     Event Image
-  ========================= */
-  
+  // Get Event Image
   function getEventImage(event) {
   
-    /*
-      First priority:
-      Image coming from API
-    */
-  
+    // Image from API
     if (event.image_url) {
       return event.image_url
     }
   
-  
-    /*
-      Second priority:
-      Our custom image for this event
-    */
-  
+    // Custom fallback image
     if (fallbackImages[event.id]) {
       return fallbackImages[event.id]
     }
   
-  
-    /*
-      Final fallback
-    */
-  
+    // Default image
     return 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1000&q=80'
   
   }
   
   
-  /* =========================
-     Image Error
-  ========================= */
-  
+  // Handle broken image
   function handleImageError(event) {
   
     event.target.src =
@@ -295,10 +253,7 @@
   }
   
   
-  /* =========================
-     Categories
-  ========================= */
-  
+  // Categories from API
   const categories = computed(() => {
   
     return [
@@ -312,10 +267,7 @@
   })
   
   
-  /* =========================
-     Search + Filter
-  ========================= */
-  
+  // Search + Filter
   const filteredEvents = computed(() => {
   
     return events.value.filter(event => {
@@ -325,24 +277,19 @@
           .toLowerCase()
           .trim()
   
-  
       const title =
         event.title?.toLowerCase() || ''
   
-  
       const description =
         event.description?.toLowerCase() || ''
-  
   
       const matchesSearch =
         title.includes(search) ||
         description.includes(search)
   
-  
       const matchesCategory =
         !selectedCategory.value ||
         event.category === selectedCategory.value
-  
   
       return matchesSearch && matchesCategory
   
@@ -351,16 +298,12 @@
   })
   
   
-  /* =========================
-     Format Date
-  ========================= */
-  
+  // Format Date
   function formatDate(date) {
   
     if (!date) {
       return 'Date not available'
     }
-  
   
     return new Date(date).toLocaleString(
       'en-US',
@@ -373,31 +316,23 @@
   }
   
   
-  /* =========================
-     Short Description
-  ========================= */
-  
+  // Short Description
   function shortDescription(description) {
   
     if (!description) {
       return 'No description available.'
     }
   
-  
     if (description.length <= 100) {
       return description
     }
-  
   
     return description.substring(0, 100) + '...'
   
   }
   
   
-  /* =========================
-     Event Details
-  ========================= */
-  
+  // View Event Details
   function viewEvent(id) {
   
     router.push(`/events/${id}`)
@@ -405,10 +340,7 @@
   }
   
   
-  /* =========================
-     Start
-  ========================= */
-  
+  // Start
   onMounted(() => {
   
     fetchEvents()
@@ -431,9 +363,7 @@
   }
   
   
-  /* =========================
-     Header
-  ========================= */
+  /* Header */
   
   .events-header {
   
@@ -442,6 +372,7 @@
     margin-bottom: 40px;
   
   }
+  
   
   .small-title {
   
@@ -459,6 +390,7 @@
   
   }
   
+  
   .events-header h1 {
   
     font-size: 44px;
@@ -469,6 +401,7 @@
   
   }
   
+  
   .events-header p {
   
     color: #777;
@@ -478,9 +411,7 @@
   }
   
   
-  /* =========================
-     Filters
-  ========================= */
+  /* Filters */
   
   .filters {
   
@@ -493,6 +424,7 @@
     margin-bottom: 40px;
   
   }
+  
   
   .filters input,
   .filters select {
@@ -511,11 +443,13 @@
   
   }
   
+  
   .filters input {
   
     width: 340px;
   
   }
+  
   
   .filters input:focus,
   .filters select:focus {
@@ -525,9 +459,7 @@
   }
   
   
-  /* =========================
-     Grid
-  ========================= */
+  /* Grid */
   
   .events-grid {
   
@@ -544,9 +476,7 @@
   }
   
   
-  /* =========================
-     Card
-  ========================= */
+  /* Card */
   
   .event-card {
   
@@ -566,6 +496,7 @@
   
   }
   
+  
   .event-card:hover {
   
     transform: translateY(-7px);
@@ -577,9 +508,7 @@
   }
   
   
-  /* =========================
-     Image
-  ========================= */
+  /* Image */
   
   .event-image {
   
@@ -590,6 +519,7 @@
     background: #eee;
   
   }
+  
   
   .event-image img {
   
@@ -605,6 +535,7 @@
   
   }
   
+  
   .event-card:hover .event-image img {
   
     transform: scale(1.05);
@@ -612,15 +543,14 @@
   }
   
   
-  /* =========================
-     Information
-  ========================= */
+  /* Information */
   
   .event-info {
   
     padding: 21px;
   
   }
+  
   
   .category {
   
@@ -642,6 +572,7 @@
   
   }
   
+  
   .event-info h2 {
   
     color: #222;
@@ -653,6 +584,7 @@
     margin: 5px 0 12px;
   
   }
+  
   
   .description {
   
@@ -666,6 +598,7 @@
   
   }
   
+  
   .venue,
   .date {
   
@@ -678,9 +611,7 @@
   }
   
   
-  /* =========================
-     Price / Seats
-  ========================= */
+  /* Price / Seats */
   
   .event-bottom {
   
@@ -698,6 +629,7 @@
   
   }
   
+  
   .price {
   
     color: #4b2e83;
@@ -708,6 +640,7 @@
   
   }
   
+  
   .seats {
   
     color: #777;
@@ -717,9 +650,7 @@
   }
   
   
-  /* =========================
-     Button
-  ========================= */
+  /* Button */
   
   .event-info button {
   
@@ -745,6 +676,7 @@
   
   }
   
+  
   .event-info button:hover {
   
     background: #372060;
@@ -752,9 +684,7 @@
   }
   
   
-  /* =========================
-     Messages
-  ========================= */
+  /* Messages */
   
   .message {
   
@@ -768,6 +698,7 @@
   
   }
   
+  
   .error {
   
     color: #c0392b;
@@ -775,9 +706,7 @@
   }
   
   
-  /* =========================
-     Responsive
-  ========================= */
+  /* Responsive */
   
   @media (max-width: 700px) {
   

@@ -1,12 +1,13 @@
+
 <template>
 
     <div id="app">
   
       <nav class="navbar">
   
-        <div class="logo">
+        <RouterLink to="/" class="logo">
           EventHub
-        </div>
+        </RouterLink>
   
         <div class="nav-links">
   
@@ -22,7 +23,6 @@
   
       </nav>
   
-  
       <main>
         <RouterView />
       </main>
@@ -33,29 +33,32 @@
   
   
   <script setup>
-  
   </script>
   
   
   <style>
   
   * {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
   }
   
   body {
-    margin: 0;
     font-family: Arial, sans-serif;
   }
   
   .navbar {
     height: 70px;
     padding: 0 7%;
+  
     display: flex;
     justify-content: space-between;
     align-items: center;
+  
     background: white;
     border-bottom: 1px solid #eee;
+  
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -63,8 +66,9 @@
   
   .logo {
     color: #4b2e83;
-    font-size: 24px;
+    font-size: 25px;
     font-weight: bold;
+    text-decoration: none;
   }
   
   .nav-links {
@@ -80,6 +84,7 @@
   
   .nav-links a.router-link-active {
     color: #4b2e83;
+    font-weight: bold;
   }
   
   </style>
