@@ -1,7 +1,3 @@
 <template>
-    <Placeholder />
+  <RouterView />
 </template>
-
-<script setup>
-import Placeholder from './components/placeholder.vue'
-</script>
