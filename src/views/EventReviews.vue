@@ -1,8 +1,10 @@
 <script setup>
 import { ref, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
 import { apiRequest } from '@/services/api.js';
 
-const eventId = 1;
+const route = useRoute();
+const eventId = route.params.id || 1; // لو مفيش id في الرابط، هيستخدم 1 كـ fallback مؤقت
 const reviews = ref([]);
 const loading = ref(true);
 const error = ref(null);
@@ -27,7 +29,7 @@ onMounted(async () => {
         <p v-else-if="reviews.length === 0">No reviews yet</p>
 
         <div v-else v-for="review in reviews" :key="review.id">
-            <p>Rating: {{ review.rating }} / 5</p>
+            <p><strong>{{ review.user_name }}</strong> — Rating: {{ review.rating }} / 5</p>
             <p>{{ review.comment }}</p>
             <hr />
         </div>

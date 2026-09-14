@@ -7,12 +7,12 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/event-reviews',
+      path: '/event-reviews/:id',
       name: 'EventReviews',
       component: EventReviews,
     },
     {
-      path: '/write-review',
+      path: '/write-review/:id',
       name: 'WriteReview',
       component: WriteReview,
     },

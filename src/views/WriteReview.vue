@@ -1,8 +1,10 @@
 <script setup>
 import { ref } from 'vue';
+import { useRoute } from 'vue-router';
 import { apiRequest } from '@/services/api.js';
 
-const eventId = 1;
+const route = useRoute();
+const eventId = route.params.id;
 const rating = ref(5);
 const comment = ref('');
 const submitting = ref(false);
