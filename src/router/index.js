@@ -1,4 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import OrganizerDashboard from '@/views/OrganizerDashboard.vue'
+import MyEvents from '@/views/MyEvents.vue'
+import CreateEditEvent from '@/views/CreateEditEvent.vue'
 
 import Home from '../views/Home.vue'
 import Events from '../views/Events.vue'
@@ -42,6 +45,26 @@ const router = createRouter({
       meta: {
         requiresAuth: true
       }
+    },
+    {
+      path: '/organizer/dashboard',
+      name: 'OrganizerDashboard',
+      component: OrganizerDashboard
+    },
+    {
+      path: '/organizer/my-events',
+      name: 'MyEvents',
+      component: MyEvents
+    },
+    {
+      path: '/organizer/events/create',
+      name: 'CreateEvent',
+      component: CreateEditEvent
+    },
+    {
+      path: '/organizer/events/edit/:id',
+      name: 'EditEvent',
+      component: CreateEditEvent
     }
   ]
 })
