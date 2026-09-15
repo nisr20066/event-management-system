@@ -1,4 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import EventReviews from '../views/EventReviews.vue'
+import WriteReview from '../views/WriteReview.vue'
+import Recommendations from '../views/Recommendations.vue'
 import OrganizerDashboard from '@/views/OrganizerDashboard.vue'
 import MyEvents from '@/views/MyEvents.vue'
 import CreateEditEvent from '@/views/CreateEditEvent.vue'
@@ -65,6 +68,21 @@ const router = createRouter({
       path: '/organizer/events/edit/:id',
       name: 'EditEvent',
       component: CreateEditEvent
+    },
+    {
+      path: '/event-reviews/:id',
+      name: 'EventReviews',
+      component: EventReviews,
+    },
+    {
+      path: '/write-review/:id',
+      name: 'WriteReview',
+      component: WriteReview,
+    },
+    {
+      path: '/recommendations',
+      name: 'Recommendations',
+      component: Recommendations,
     }
   ]
 })
