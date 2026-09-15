@@ -13,6 +13,10 @@ import LoginView from '../views/LoginView.vue'
 import RegisterView from '../views/RegisterView.vue'
 import ProfileView from '../views/ProfileView.vue'
 
+import AdminDashboard from '../views/Admin/AdminDashboard.vue'
+import EventsUsersManagement from '../views/Admin/EventsUsersManagement.vue'
+import MyTickets from '../views/Admin/MyTickets.vue'
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -83,6 +87,21 @@ const router = createRouter({
       path: '/recommendations',
       name: 'Recommendations',
       component: Recommendations,
+    },
+    {
+      path: '/admin',
+      name: 'AdminDashboard',
+      component: AdminDashboard
+    },
+    {
+      path: '/admin/events-users',
+      name: 'EventsUsersManagement',
+      component: EventsUsersManagement
+    },
+    {
+      path: '/my-tickets',
+      name: 'MyTickets',
+      component: MyTickets
     }
   ]
 })
