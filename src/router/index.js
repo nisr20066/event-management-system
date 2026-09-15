@@ -1,58 +1,40 @@
-// const BASE_URL = 'https://eventhub-backend-m01d.onrender.com/api'
-
-// export async function request(endpoint, options = {}) {
-//   const token = localStorage.getItem('token')
-
-//   const headers = {
-//     'Content-Type': 'application/json',
-//     'Accept': 'application/json',
-//     ...(token && { Authorization: `Bearer ${token}` }),
-//     ...options.headers
-//   }
-
-//   const response = await fetch(`${BASE_URL}${endpoint}`, {
-//     ...options,
-//     headers
-//   })
-
-//   const data = await response.json().catch(() => ({}))
-
-//   if (!response.ok) {
-//     const errorMsg = data.message || `Error ${response.status}: Failed to fetch`
-//     throw new Error(errorMsg)
-//   }
-
-//   return data
-// }
-
-
 import { createRouter, createWebHistory } from 'vue-router'
 
+import Home from '../views/Home.vue'
+import Events from '../views/Events.vue'
+import EventDetails from '../views/EventDetails.vue'
 import LoginView from '../views/LoginView.vue'
 import RegisterView from '../views/RegisterView.vue'
 import ProfileView from '../views/ProfileView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-
   routes: [
     {
       path: '/',
-      redirect: '/login'
+      name: 'home',
+      component: Home
     },
-
+    {
+      path: '/events',
+      name: 'events',
+      component: Events
+    },
+    {
+      path: '/events/:id',
+      name: 'event-details',
+      component: EventDetails
+    },
     {
       path: '/login',
       name: 'login',
       component: LoginView
     },
-
     {
       path: '/register',
       name: 'register',
       component: RegisterView
     },
-
     {
       path: '/profile',
       name: 'profile',
