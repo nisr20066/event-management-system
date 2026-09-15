@@ -87,14 +87,33 @@ export const createBooking = async (bookingData) => {
   return data;
 };
 
+// export const getBookings = async () => {
+//   const response = await fetch(`${BASE_URL}/api/bookings`);
+
+//   if (!response.ok) {
+//     throw new Error("Failed to get bookings");
+//   }
+
+//   const data = await response.json();
+
+//   return data;
+// };
+
 export const getBookings = async () => {
-  const response = await fetch(`${BASE_URL}/api/bookings`);
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(
+    `${BASE_URL}/api/bookings`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
 
   if (!response.ok) {
     throw new Error("Failed to get bookings");
   }
 
-  const data = await response.json();
-
-  return data;
+  return await response.json();
 };
