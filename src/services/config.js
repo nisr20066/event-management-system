@@ -1,0 +1,1 @@
+export const BASE_URL = "https://eventhub-backend-m01d.onrender.com";
