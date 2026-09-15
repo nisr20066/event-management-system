@@ -1,10 +1,20 @@
 import { createRouter, createWebHistory } from 'vue-router'
+
+
+import BookingView from '@/views/BookingView.vue'
+import CheckoutView from '@/views/CheckoutView.vue'
+import MyBookingsView from '@/views/MyBookingsView.vue'
+
+
 import EventReviews from '../views/EventReviews.vue'
 import WriteReview from '../views/WriteReview.vue'
 import Recommendations from '../views/Recommendations.vue'
+
+
 import OrganizerDashboard from '@/views/OrganizerDashboard.vue'
 import MyEvents from '@/views/MyEvents.vue'
 import CreateEditEvent from '@/views/CreateEditEvent.vue'
+
 
 import Home from '../views/Home.vue'
 import Events from '../views/Events.vue'
@@ -102,6 +112,22 @@ const router = createRouter({
       path: '/my-tickets',
       name: 'MyTickets',
       component: MyTickets
+    },
+    // Booking Routes
+    {
+      path: '/events/:id/booking',
+      name: 'booking',
+      component: BookingView,
+    },
+    {
+      path: '/checkout',
+      name: 'checkout',
+      component: CheckoutView,
+    },
+    {
+      path: '/my-bookings',
+      name: 'my-bookings',
+      component: MyBookingsView,
     }
   ]
 })
