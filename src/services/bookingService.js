@@ -70,10 +70,12 @@ export const getEvent = async (eventId) => {
 };
 
 export const createBooking = async (bookingData) => {
+  const token = localStorage.getItem("token");
   const response = await fetch(`${BASE_URL}/api/bookings`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
     },
     body: JSON.stringify(bookingData),
   });

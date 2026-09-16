@@ -66,22 +66,26 @@ const router = createRouter({
     {
       path: '/organizer/dashboard',
       name: 'OrganizerDashboard',
-      component: OrganizerDashboard
+      component: OrganizerDashboard,
+      meta: { requiresAuth: true, roles: ['organizer', 'admin'] }
     },
     {
       path: '/organizer/my-events',
       name: 'MyEvents',
-      component: MyEvents
+      component: MyEvents,
+      meta: { requiresAuth: true, roles: ['organizer', 'admin'] }
     },
     {
       path: '/organizer/events/create',
       name: 'CreateEvent',
-      component: CreateEditEvent
+      component: CreateEditEvent,
+      meta: { requiresAuth: true, roles: ['organizer', 'admin'] }
     },
     {
       path: '/organizer/events/edit/:id',
       name: 'EditEvent',
-      component: CreateEditEvent
+      component: CreateEditEvent,
+      meta: { requiresAuth: true, roles: ['organizer', 'admin'] }
     },
     {
       path: '/event-reviews/:id',
@@ -92,51 +96,72 @@ const router = createRouter({
       path: '/write-review/:id',
       name: 'WriteReview',
       component: WriteReview,
+      meta: { requiresAuth: true }
     },
     {
       path: '/recommendations',
       name: 'Recommendations',
       component: Recommendations,
+      meta: { requiresAuth: true, roles: ['admin'] }
     },
     {
       path: '/admin',
       name: 'AdminDashboard',
-      component: AdminDashboard
+      component: AdminDashboard,
+      meta: { requiresAuth: true, roles: ['admin'] }
     },
     {
       path: '/admin/events-users',
       name: 'EventsUsersManagement',
-      component: EventsUsersManagement
+      component: EventsUsersManagement,
+      meta: { requiresAuth: true, roles: ['admin'] }
     },
     {
       path: '/my-tickets',
       name: 'MyTickets',
-      component: MyTickets
+      component: MyTickets,
+      meta: { requiresAuth: true }
     },
     // Booking Routes
     {
       path: '/events/:id/booking',
       name: 'booking',
       component: BookingView,
+      meta: { requiresAuth: true }
     },
     {
       path: '/checkout',
       name: 'checkout',
       component: CheckoutView,
+      meta: { requiresAuth: true }
     },
     {
       path: '/my-bookings',
       name: 'my-bookings',
       component: MyBookingsView,
+      meta: { requiresAuth: true }
     }
   ]
 })
 
 router.beforeEach((to) => {
   const token = localStorage.getItem('token')
+  let user = null
+  try {
+    user = JSON.parse(localStorage.getItem('user') || 'null')
+  } catch {
+    localStorage.removeItem('user')
+  }
 
   if (to.meta.requiresAuth && !token) {
-    return '/login'
+    return {
+      name: 'login',
+      query: { redirect: to.fullPath }
+    }
+  }
+
+  if (to.meta.roles && !to.meta.roles.includes(String(user?.role || '').toLowerCase())) {
+    return { name: 'home' }
   }
 
   if (

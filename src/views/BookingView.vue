@@ -26,7 +26,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="container py-5">
+  <div class="container py-5 booking-page">
     <h2>Select Seats</h2>
 
     <div v-if="loading">
@@ -104,7 +104,9 @@ onMounted(() => {
 <template>
   <div class="container py-5">
 
-    <h1 class="mb-4">Select Your Seats</h1>
+    <p class="eyebrow">STEP 1 OF 2</p>
+    <h1 class="mb-4">Choose your seats</h1>
+    <p class="lead">Select available seats, then review your booking securely.</p>
 
     <!-- Loading -->
     <div v-if="loading">
@@ -124,10 +126,10 @@ onMounted(() => {
       <div
         v-for="(rowSeats, rowLabel) in seats"
         :key="rowLabel"
-        class="mb-4"
+        class="seat-row"
       >
 
-        <div class="d-flex align-items-center gap-3">
+        <div class="seat-line">
 
           <strong style="width: 30px;">
             {{ rowLabel }}
@@ -136,7 +138,7 @@ onMounted(() => {
           <button
             v-for="seat in rowSeats"
             :key="seat.id"
-            class="btn"
+            class="seat"
             :class="{
               'btn-secondary': seat.status === 'booked',
               'btn-outline-primary':
@@ -156,9 +158,9 @@ onMounted(() => {
       </div>
 
       <!-- Selected seats -->
-      <div class="mt-5">
+      <div class="selection-summary">
 
-        <h4>Selected Seats</h4>
+        <h4>Selected seats</h4>
 
         <p v-if="bookingStore.selectedSeats.length === 0">
           No seats selected.
@@ -173,7 +175,7 @@ onMounted(() => {
 
       <!-- Continue -->
       <button
-        class="btn btn-success mt-3"
+        class="checkout-button"
         @click="goToCheckout"
         :disabled="bookingStore.selectedSeats.length === 0"
       >
@@ -184,3 +186,7 @@ onMounted(() => {
 
   </div>
 </template>
+
+<style scoped>
+.booking-page{max-width:880px}.eyebrow{margin:0 0 8px;color:#fb923c;font-size:.75rem;font-weight:800;letter-spacing:.12em}.lead{color:#94a3b8;margin-bottom:32px}.seat-row{margin:16px 0}.seat-line{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:#1e293b;border:1px solid #334155;border-radius:12px;padding:14px}.seat-line strong{width:28px;color:#fb923c}.seat{min-width:42px;padding:9px 7px!important;background:#0f172a!important;border:1px solid #475569!important;color:#cbd5e1!important}.seat.btn-primary{background:#f97316!important;border-color:#f97316!important;color:#fff!important}.seat.btn-secondary{background:#475569!important;color:#94a3b8!important}.selection-summary{margin-top:32px;padding:20px;background:#1e293b;border:1px solid #334155;border-radius:12px}.selection-summary h4{margin:0 0 8px}.selection-summary p{color:#cbd5e1}.checkout-button{margin-top:16px;background:#f97316!important}@media(max-width:560px){.seat-line{gap:7px}.seat{min-width:36px;padding:8px 5px!important}}
+</style>

@@ -11,6 +11,7 @@ const email = ref('')
 const phone = ref('')
 const password = ref('')
 const confirmPassword = ref('')
+const role = ref('participant')
 const errorMessage = ref('')
 const isLoading = ref(false)
 
@@ -53,6 +54,7 @@ const email = ref('')
 
 const password = ref('')
 const confirmPassword = ref('')
+const role = ref('participant')
 
 const errorMessage = ref('')
 const isLoading = ref(false)
@@ -81,10 +83,19 @@ async function handleRegister() {
     await authStore.register(
       name.value,
       email.value,
-      password.value
+      password.value,
+      role.value
     )
 
-    router.push('/profile')
+    const registeredRole = String(authStore.user?.role || '').toLowerCase()
+
+    if (registeredRole === 'admin') {
+      router.push('/admin')
+    } else if (registeredRole === 'organizer') {
+      router.push('/organizer/dashboard')
+    } else {
+      router.push('/profile')
+    }
 
   } catch (error) {
     errorMessage.value =
@@ -132,6 +143,16 @@ async function handleRegister() {
         </div>
 
         
+
+        <div class="form-group">
+          <label for="role">Account type</label>
+
+          <select id="role" v-model="role">
+            <option value="participant">Participant</option>
+            <option value="organizer">Organizer</option>
+            <option value="admin">Admin</option>
+          </select>
+        </div>
 
         <div class="form-group">
           <label>Password</label>
@@ -235,6 +256,14 @@ input {
   box-sizing: border-box;
 }
 
+select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
 button {
   width: 100%;
   padding: 12px;
@@ -258,4 +287,8 @@ button:disabled {
   text-align: center;
   margin-top: 20px;
 }
+</style>
+
+<style scoped>
+.auth-page{background:radial-gradient(circle at 80% 15%,rgba(249,115,22,.16),transparent 28%),#0f172a}.auth-card{border-top:3px solid #f97316!important}.auth-card h1,.auth-card h2{color:#fff}.subtitle,.bottom-text{color:#94a3b8}.form-group label{color:#cbd5e1}.form-group input,.form-group select{background:#0f172a;color:#fff;border-color:#475569}.form-group input:focus,.form-group select:focus{border-color:#f97316}.auth-card button{background:#f97316}.bottom-text a{color:#fb923c}
 </style>
