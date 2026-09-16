@@ -44,11 +44,13 @@ onMounted(async () => {
     console.log('Admin analytics:', data)
 
     if (data) {
+      const summary = data.summary ?? data
+
       stats.value = {
-        events: data.events ?? data.total_events ?? 0,
-        users: data.users ?? data.total_users ?? 0,
-        organizers: data.organizers ?? data.total_organizers ?? 0,
-        bookings: data.bookings ?? data.total_bookings ?? 0,
+        events: summary.events ?? summary.total_events ?? 0,
+        users: summary.users ?? summary.total_users ?? 0,
+        organizers: summary.organizers ?? summary.total_organizers ?? 0,
+        bookings: summary.bookings ?? summary.total_bookings ?? 0,
       }
     }
   } catch (error) {
@@ -79,4 +81,8 @@ onMounted(async () => {
 .card h2 {
   margin-top: 0;
 }
+</style>
+
+<style scoped>
+.page{max-width:1120px;margin:0 auto;background:#0f172a;border:0!important;color:#fff}.page h1{font-size:2.2rem}.dashboard{grid-template-columns:repeat(4,minmax(0,1fr))}.card{background:#1e293b;border:1px solid #334155!important;border-radius:12px;border-top:3px solid #f97316!important}.card h2{color:#94a3b8;font-size:.9rem;text-transform:uppercase;letter-spacing:.08em}.card p{color:#fff;font-size:2.1rem;font-weight:800;margin-bottom:0}@media(max-width:850px){.dashboard{grid-template-columns:repeat(2,1fr)}}@media(max-width:480px){.dashboard{grid-template-columns:1fr}}
 </style>

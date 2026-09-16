@@ -33,28 +33,83 @@
         ></textarea>
       </div>
 
+      <div class="mb-4">
+        <label class="block mb-2">Venue</label>
+
+        <input
+          type="text"
+          v-model="form.venue"
+          class="w-full p-2 border rounded"
+          required
+        />
+      </div>
+
       <!-- Event Date -->
       <div class="mb-4">
         <label class="block mb-2">Event Date</label>
 
         <input
-          type="date"
+          type="datetime-local"
           v-model="form.event_date"
           class="w-full p-2 border rounded"
           required
         />
       </div>
 
-      <!-- Available Seats -->
       <div class="mb-4">
-        <label class="block mb-2">Available Seats</label>
+        <label class="block mb-2">Number of Rows</label>
 
         <input
           type="number"
-          v-model="form.available_seats"
+          v-model.number="form.total_rows"
+          class="w-full p-2 border rounded"
+          required
+          min="1"
+        />
+      </div>
+
+      <div class="mb-4">
+        <label class="block mb-2">Seats per Row</label>
+
+        <input
+          type="number"
+          v-model.number="form.seats_per_row"
+          class="w-full p-2 border rounded"
+          required
+          min="1"
+        />
+      </div>
+
+      <div class="mb-4">
+        <label class="block mb-2">Ticket Price (EGP)</label>
+
+        <input
+          type="number"
+          v-model.number="form.ticket_price"
           class="w-full p-2 border rounded"
           required
           min="0"
+          step="0.01"
+        />
+      </div>
+
+      <div class="mb-4">
+        <label class="block mb-2">Category <small>(optional)</small></label>
+
+        <input
+          type="text"
+          v-model="form.category"
+          class="w-full p-2 border rounded"
+        />
+      </div>
+
+      <div class="mb-4">
+        <label class="block mb-2">Image URL <small>(optional)</small></label>
+
+        <input
+          type="url"
+          v-model="form.image_url"
+          class="w-full p-2 border rounded"
         />
       </div>
 
@@ -90,7 +145,12 @@ const form = ref({   // object to store event
   title: '',
   description: '',
   event_date: '',
-  available_seats: 0
+  venue: '',
+  total_rows: 10,
+  seats_per_row: 20,
+  ticket_price: 0,
+  category: '',
+  image_url: ''
 })
 
 // check if we are editing an existing event or creating
@@ -115,9 +175,14 @@ const fetchEvent = async () => {
       title: data.title || '', // if not exist put ''
       description: data.description || '',
       event_date: data.event_date
-        ? data.event_date.split('T')[0]
+        ? data.event_date.slice(0, 16)
         : '',
-      available_seats: data.available_seats ?? 0 // Null or undefined -->0
+      venue: data.venue || '',
+      total_rows: data.total_rows ?? 10,
+      seats_per_row: data.seats_per_row ?? 20,
+      ticket_price: data.ticket_price ?? 0,
+      category: data.category || '',
+      image_url: data.image_url || ''
     }
 
   } catch (err) {  // catch error of API
@@ -139,11 +204,14 @@ const handleSubmit = async () => {   // when press submit
   try {
     loading.value = true
 
-    const eventData = {   // send to back end
-      title: form.value.title,
-      description: form.value.description,
+    const eventData = {
+      title: form.value.title.trim(),
+      description: form.value.description.trim() || null,
+      venue: form.value.venue.trim(),
       event_date: form.value.event_date,
-      available_seats: Number(form.value.available_seats)
+      ticket_price: Number(form.value.ticket_price),
+      category: form.value.category.trim() || null,
+      image_url: form.value.image_url.trim() || null
     }
 
 
@@ -166,6 +234,9 @@ const handleSubmit = async () => {   // when press submit
     // CREATE
     // =========================
     else {
+
+      eventData.total_rows = Number(form.value.total_rows)
+      eventData.seats_per_row = Number(form.value.seats_per_row)
 
       await apiRequest(
         'api/events',
@@ -206,3 +277,7 @@ onMounted(() => {
 // edit --> front end 
 // update --> edit back end
 </script>
+
+<style scoped>
+.p-6{background:#1e293b;border:1px solid #334155!important;border-top:3px solid #f97316!important;border-radius:12px!important;color:#fff}.max-w-lg{max-width:680px}.mx-auto{margin:56px auto}.text-2xl{color:#fff}.mb-2{margin-bottom:8px}.block{display:block}.w-full{width:100%}.p-2{padding:12px!important}.border{border-color:#475569!important}.rounded{border-radius:8px!important}.font-semibold{font-weight:700}.p-6 button{background:#f97316;color:#fff;border:0}.text-center{color:#94a3b8}
+</style>

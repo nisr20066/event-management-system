@@ -1,34 +1,3 @@
-<!-- <script setup>
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
-import { useAuthStore } from '@/stores/auth'
-
-const router = useRouter()
-const authStore = useAuthStore()
-
-const email = ref('')
-const password = ref('')
-const errorMessage = ref('')
-const isLoading = ref(false)
-
-const handleLogin = async () => {
-  errorMessage.value = ''
-  isLoading.value = true
-
-  try {
-    await authStore.login({
-      email: email.value,
-      password: password.value
-    })
-    router.push('/profile')
-  } catch (err) {
-    errorMessage.value = err.message || 'فشل تسجيل الدخول، تأكد من البيانات المدخلة'
-  } finally {
-    isLoading.value = false
-  }
-}
-</script> -->
-
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
@@ -59,7 +28,12 @@ async function handleLogin() {
       password.value
     )
 
-    router.push('/profile')
+    const redirect = router.currentRoute.value.query.redirect
+    router.push(
+      typeof redirect === 'string' && redirect.startsWith('/')
+        ? redirect
+        : '/profile'
+    )
   } catch (error) {
     errorMessage.value =
       error.message || 'Login failed.'
@@ -214,4 +188,8 @@ button:disabled {
 .bottom-text a {
   font-weight: bold;
 }
+</style>
+
+<style scoped>
+.auth-page{background:radial-gradient(circle at 20% 20%,rgba(249,115,22,.16),transparent 28%),#0f172a}.auth-card{border-top:3px solid #f97316!important}.auth-card h1,.auth-card h2{color:#fff}.subtitle{color:#94a3b8}.form-group label{color:#cbd5e1}.form-group input{background:#0f172a;color:#fff;border-color:#475569}.form-group input:focus{border-color:#f97316}.auth-card button{background:#f97316}.bottom-text{color:#94a3b8}.bottom-text a{color:#fb923c}
 </style>

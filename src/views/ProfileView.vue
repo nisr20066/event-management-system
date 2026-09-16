@@ -134,3 +134,7 @@ button {
   background: #777;
 }
 </style>
+
+<style scoped>
+.profile-page{background:#0f172a}.profile-card{border-top:3px solid #f97316!important}.profile-card h1{color:#fff}.profile-card input{color:#cbd5e1!important;background:#0f172a!important}.logout{background:#ef4444!important}
+</style>

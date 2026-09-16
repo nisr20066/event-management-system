@@ -737,3 +737,7 @@
   }
   
   </style>
+
+  <style scoped>
+  .events-page{background:#0f172a}.small-title{color:#fb923c}.events-header h1{color:#fff;letter-spacing:-.045em}.events-header p{color:#94a3b8}.filters input,.filters select{background:#1e293b!important;color:#fff;border-color:#475569}.filters input:focus,.filters select:focus{border-color:#f97316}.events-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.event-card{display:flex;flex-direction:column;background:#1e293b!important;border:1px solid #334155;box-shadow:none!important}.event-card:hover{transform:scale(1.02);border-color:#f97316;box-shadow:0 16px 28px rgba(0,0,0,.18)!important}.event-info{display:flex;flex:1;flex-direction:column}.event-info h2{color:#fff}.description,.venue,.date,.seats{color:#94a3b8!important}.category{background:rgba(249,115,22,.14)!important;color:#fb923c!important;border-radius:6px!important}.event-bottom{border-color:#334155!important}.price{color:#fb923c!important}.event-info button{margin-top:auto;background:#f97316!important;color:#fff;border-radius:8px}.message{color:#cbd5e1}.error{color:#fca5a5!important}@media(max-width:1000px){.events-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:700px){.filters{flex-direction:column}.filters input{width:100%}.events-grid{grid-template-columns:1fr}}
+  </style>

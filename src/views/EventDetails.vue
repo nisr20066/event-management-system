@@ -76,10 +76,23 @@
   ← Back to Events
 </button>
 
-<!-- Booking teammate will connect this button later -->
+<button
+  class="reviews-btn"
+  @click="viewReviews"
+>
+  View Reviews
+</button>
+
+<button
+  class="reviews-btn"
+  @click="writeReview"
+>
+  Write a Review
+</button>
+
 <button
   class="book-btn"
-  disabled
+  @click="bookEvent"
 >
   Book Now
 </button>
@@ -160,6 +173,18 @@
     router.push('/events')
   
   }
+
+  function bookEvent() {
+    router.push(`/events/${route.params.id}/booking`)
+  }
+
+  function viewReviews() {
+    router.push(`/event-reviews/${route.params.id}`)
+  }
+
+  function writeReview() {
+    router.push(`/write-review/${route.params.id}`)
+  }
   
   
   onMounted(() => {
@@ -179,7 +204,7 @@
   
     padding: 50px 7%;
   
-    background: #f8f6fc;
+    background: #0f172a;
   
   }
   
@@ -190,7 +215,8 @@
   
     margin: auto;
   
-    background: white;
+    background: #1e293b;
+    border: 1px solid #334155;
   
     border-radius: 20px;
   
@@ -205,7 +231,7 @@
   
     height: 400px;
   
-    background: #eee;
+    background: #0f172a;
   
   }
   
@@ -231,7 +257,7 @@
   
     justify-content: center;
   
-    color: #999;
+    color: #94a3b8;
   
     font-size: 20px;
   
@@ -264,7 +290,7 @@
   
   h1 {
   
-    color: #222;
+    color: #fff;
   
     font-size: 40px;
   
@@ -275,7 +301,7 @@
   
   .description {
   
-    color: #666;
+    color: #cbd5e1;
   
     line-height: 1.8;
   
@@ -303,7 +329,7 @@
   
     padding: 18px;
   
-    background: #f8f6fc;
+    background: #0f172a;
   
     border-radius: 12px;
   
@@ -314,7 +340,7 @@
   
     display: block;
   
-    color: #4b2e83;
+    color: #fb923c;
   
     margin-bottom: 7px;
   
@@ -323,7 +349,7 @@
   
   .info-item span {
   
-    color: #555;
+    color: #cbd5e1;
   
   }
   
@@ -341,16 +367,28 @@
 }
 
 .back-btn {
-  background: #eee;
-  color: #333;
+  background: #334155;
+  color: #fff;
   cursor: pointer;
 }
 
+.reviews-btn {
+  background: transparent;
+  color: #fff;
+  border: 1px solid #64748b !important;
+  cursor: pointer;
+}
+
+.reviews-btn:hover {
+  border-color: #fb923c !important;
+  color: #fb923c;
+}
+
 .book-btn {
-  background: #4b2e83;
+  background: #f97316;
   color: white;
-  cursor: not-allowed;
-  opacity: 0.6;
+  cursor: pointer;
+  opacity: 1;
 }
   
   

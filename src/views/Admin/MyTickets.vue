@@ -1,6 +1,7 @@
 <template>
-  <div class="page">
-    <h1>My Tickets</h1>
+  <div class="page tickets-page">
+    <p class="eyebrow">EVENTHUB WALLET</p>
+    <h1>My tickets</h1>
 
     <p v-if="loading">Loading tickets...</p>
 
@@ -16,7 +17,7 @@
         :key="ticket.id"
         class="ticket"
       >
-        <h2>Digital Ticket</h2>
+        <div class="ticket-top"><span>EVENT TICKET</span><h2>Digital Ticket</h2></div>
 
         <p>
           <strong>Booking ID:</strong>
@@ -30,12 +31,9 @@
 
         <p>
           <strong>Seats:</strong>
-          {{ formatSeats(ticket.seat_ids) }}
+          {{ formatSeats(ticketSeats(ticket)) }}
         </p>
 
-        <button @click="viewTicket(ticket)">
-          View Ticket
-        </button>
       </div>
     </div>
   </div>
@@ -64,20 +62,25 @@ async function loadTickets() {
   }
 }
 
+function ticketSeats(ticket) {
+  return ticket.seats ?? ticket.seat_ids ?? ticket.seat_numbers ?? ticket.booked_seats
+}
+
 function formatSeats(seats) {
-  if (!seats) {
+  if (!seats || (Array.isArray(seats) && seats.length === 0)) {
     return 'No seats'
   }
 
   if (Array.isArray(seats)) {
-    return seats.join(', ')
+    return seats.map((seat) => {
+      if (typeof seat === 'object') {
+        return `${seat.row_label ?? seat.row ?? ''}${seat.seat_number ?? seat.number ?? seat.id ?? ''}`
+      }
+      return seat
+    }).join(', ')
   }
 
   return seats
-}
-
-function viewTicket(ticket) {
-  console.log('Digital ticket:', ticket)
 }
 
 onMounted(() => {
@@ -101,4 +104,8 @@ onMounted(() => {
 button {
   padding: 8px 15px;
 }
+</style>
+
+<style scoped>
+.tickets-page{max-width:960px;margin:0 auto;background:#0f172a;border:0!important;color:#fff}.eyebrow{color:#fb923c;font-size:.75rem;font-weight:800;letter-spacing:.12em}.ticket{position:relative;overflow:hidden;border-left:4px solid #f97316!important;border-radius:12px}.ticket:after{content:"";position:absolute;width:34px;height:34px;border-radius:50%;background:#0f172a;right:-17px;top:95px}.ticket-top{border-bottom:1px dashed #64748b;padding-bottom:14px}.ticket-top span{color:#fb923c;font-size:.75rem;font-weight:800;letter-spacing:.12em}.ticket h2{margin:8px 0 0}.ticket p{color:#cbd5e1}.ticket strong{color:#94a3b8}.ticket button{background:#334155}
 </style>

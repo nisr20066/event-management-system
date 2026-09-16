@@ -21,13 +21,15 @@ const goBack = () => {
 </script>
 
 <template>
-  <div class="container py-5">
+  <div class="container py-5 checkout-page">
 
-    <h1>Checkout</h1>
+    <p class="eyebrow">STEP 2 OF 2</p>
+    <h1>Review and confirm</h1>
 
-    <div class="card mt-4 p-4">
+    <div class="card checkout-card">
 
-      <h3>{{ bookingStore.eventTitle }}</h3>
+      <span class="ticket-label">EVENT TICKET</span>
+      <h3>{{ bookingStore.eventTitle || 'Your event' }}</h3>
 
       <p>
         Number of seats:
@@ -145,7 +147,7 @@ const confirmBooking = async () => {
         {{ error }}
       </p>
 
-      <div class="mt-4">
+      <div class="checkout-actions">
 
         <button
           class="btn btn-secondary me-2"
@@ -169,3 +171,7 @@ const confirmBooking = async () => {
 
   </div>
 </template>
+
+<style scoped>
+.checkout-page{max-width:720px}.eyebrow,.ticket-label{color:#fb923c;font-size:.75rem;font-weight:800;letter-spacing:.12em}.checkout-card{margin-top:22px!important;padding:30px!important}.checkout-card h3{font-size:1.55rem;margin:10px 0 24px}.checkout-card p{display:flex;justify-content:space-between;color:#cbd5e1}.checkout-card h4{font-size:1.4rem;color:#fff}.checkout-card hr{border:0;border-top:1px solid #475569;margin:24px 0}.checkout-actions{display:flex;gap:12px;margin-top:24px}.checkout-actions .btn-success{background:#f97316!important}@media(max-width:500px){.checkout-actions{flex-direction:column}}
+</style>
