@@ -20,6 +20,11 @@ async function handleLogin() {
     return
   }
 
+  if (password.value.length < 8) {
+    errorMessage.value = 'Password must be at least 8 characters.'
+    return
+  }
+
   isLoading.value = true
 
   try {
@@ -75,6 +80,7 @@ async function handleLogin() {
             v-model="password"
             type="password"
             placeholder="Enter your password"
+            autocomplete="current-password"
           />
         </div>
 
