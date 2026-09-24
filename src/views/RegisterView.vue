@@ -77,6 +77,11 @@ async function handleRegister() {
     return
   }
 
+  if (password.value.length < 8) {
+    errorMessage.value = 'Password must be at least 8 characters.'
+    return
+  }
+
   isLoading.value = true
 
   try {
@@ -161,6 +166,7 @@ async function handleRegister() {
             v-model="password"
             type="password"
             placeholder="Enter your password"
+            autocomplete="new-password"
           />
         </div>
 
@@ -171,6 +177,7 @@ async function handleRegister() {
             v-model="confirmPassword"
             type="password"
             placeholder="Confirm your password"
+            autocomplete="new-password"
           />
         </div>
 
